@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Infinight: from group chat to a booked night out | Harini</title>
+<meta name="description" content="I designed Infinight, a going-out app that helps a group pick one night, book it together and get everyone home safely. The ask, what I built and what testing backed up.">
+<meta property="og:title" content="Every Saturday, a plan dies in the group chat. Infinight brings it home.">
+<meta property="og:description" content="A going-out app that helps a group pick one night, book it together and get everyone home safely.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
+<style>
+  :root{--bg:#0b0812;--bg2:#120c1d;--card:#171024;--line:rgba(199,125,255,.18);--ink:#f3edfa;--muted:#a99cbd;--accent:#c77dff;--accent2:#8b1fd6;--gut:20px}
+  @media (min-width:720px){:root{--gut:40px}}
+  @media (min-width:1100px){:root{--gut:72px}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font:400 17px/1.6 "Bricolage Grotesque",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+  .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--bg);padding:8px 12px;z-index:99;font-weight:600}.skip:focus{left:8px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 var(--gut)}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:14px;font-weight:600}
+  .top a{text-decoration:none;color:var(--muted)}.top a:hover{color:var(--ink)}
+  .serif{font-family:"Newsreader",Georgia,serif;font-weight:300;letter-spacing:-.02em}
+  .kick{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  em{font-style:italic;color:var(--accent)}
+  /* hero */
+  .hero{position:relative;padding:56px 0 72px;overflow:hidden}
+  .hero:before{content:"";position:absolute;right:-12%;top:-30%;width:70vw;height:70vw;max-width:900px;max-height:900px;border-radius:50%;background:radial-gradient(circle,rgba(139,31,214,.35),transparent 62%);pointer-events:none}
+  .hero h1{font-size:clamp(42px,6.4vw,88px);line-height:1;margin:18px 0 26px;max-width:14ch}
+  .hero p.lede{font-size:clamp(18px,1.6vw,21px);color:#d9cfe8;max-width:40ch}
+  .meta{display:flex;flex-wrap:wrap;gap:28px 44px;margin-top:34px;font-size:14px}
+  .meta dt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .meta dd{margin-top:4px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:13px 22px;font-weight:600;font-size:15px;text-decoration:none;transition:transform .2s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.p{background:linear-gradient(90deg,var(--accent2),#b429c8);color:#fff}
+  .btn.s{border:1px solid rgba(243,237,250,.35)}
+  .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+  /* ask */
+  section{padding:80px 0;border-top:1px solid var(--line)}
+  .two{display:grid;gap:36px}
+  @media (min-width:900px){.two{grid-template-columns:5fr 6fr;gap:72px}}
+  h2{font-size:clamp(32px,4vw,52px);line-height:1.05;margin-top:14px}
+  .body{color:#d9cfe8}
+  .body p+p{margin-top:14px}
+  .quotes{display:grid;gap:12px;margin-top:26px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .q b{display:block;font-family:"Newsreader",Georgia,serif;font-weight:400;font-style:italic;font-size:19px;color:var(--ink)}
+  .q span{font-size:14px;color:var(--muted)}
+  /* outcome */
+  .flow{display:grid;grid-template-columns:1fr;gap:28px;margin-top:44px;justify-items:center}
+  @media (min-width:760px){.flow{grid-template-columns:repeat(3,1fr);align-items:start}}
+  figure{max-width:300px;width:100%}
+  figure .ph{border-radius:40px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(199,125,255,.2)}
+  figure img{display:block;width:100%;height:auto}
+  figure.mid .ph{box-shadow:0 0 70px -10px rgba(139,31,214,.6),0 0 0 1px rgba(199,125,255,.35)}
+  figcaption{margin-top:16px;text-align:center;font-size:15px;color:#d9cfe8}
+  figcaption b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .grid3{display:grid;gap:14px;margin-top:40px}
+  @media (min-width:860px){.grid3{grid-template-columns:repeat(3,1fr)}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .card h3{font-size:18px;font-weight:600;margin:10px 0 6px}
+  .card p{font-size:15px;color:var(--muted)}
+  .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+  .tag.ok{background:rgba(64,214,140,.14);color:#6ee7a8}
+  .tag.bet{background:rgba(199,125,255,.14);color:var(--accent)}
+  .note{margin-top:22px;font-size:15px;color:var(--muted);max-width:62ch}
+  /* cta */
+  .end{border-top:0;padding:24px 0 80px}
+  .endbox{background:radial-gradient(circle at 85% 0,rgba(139,31,214,.45),transparent 55%),var(--bg2);border:1px solid var(--line);border-radius:28px;padding:clamp(28px,5vw,56px)}
+  .endbox h2{margin:0 0 12px}
+  .endbox p{color:#d9cfe8;max-width:52ch}
+  footer{padding:26px 0 40px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;border-top:1px solid var(--line)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <nav class="top" aria-label="Case study"><a href="index.html">&larr; Harini's portfolio</a><a href="infinight-full.html">Full case study &rarr;</a></nav>
+</div>
+<main id="main">
+  <header class="hero">
+    <div class="wrap">
+      <span class="kick">Infinight · Consumer app · Independent project · 2026</span>
+      <h1 class="serif">Get a group from <em>“what are we doing?”</em> to a booked night out.</h1>
+      <p class="lede">Every Saturday, a plan dies in the group chat. I designed Infinight, a going-out app that helps a group pick one night, book it together and get everyone home safely.</p>
+      <dl class="meta">
+        <div><dt>Role</dt><dd>Product Designer</dd></div>
+        <div><dt>Scope</dt><dd>Research · Product strategy · UX · UI · Prototype</dd></div>
+        <div><dt>Where</dt><dd>Bengaluru</dd></div>
+      </dl>
+      <div class="ctas"><a class="btn p" href="infinight-full.html">Read the full case study &rarr;</a><a class="btn s" href="infinight-full.html#prototype">Try the prototype</a></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="ask">
+    <div class="wrap two">
+      <div>
+        <span class="kick">The ask</span>
+        <h2 id="ask" class="serif">Everyone helps you find. <em>Nobody helps you decide.</em></h2>
+      </div>
+      <div class="body">
+        <p>BookMyShow, District and Swiggy Scenes each own one slice of the night, and each stops at the ticket. None of them help a group agree. That moment is the opportunity: whoever owns the point where a group says yes owns the booking that follows, and one squad plan turns into seats, rides out and rides home for everyone.</p>
+        <p>I talked to people and read their real group chats from the first message to the final Uber split. Three things kept showing up.</p>
+        <div class="quotes">
+          <div class="q"><b>“so what are we doing tonight?”</b><span>Deciding together: three to five people, one thread, no shared view of the options.</span></div>
+          <div class="q"><b>“is it safe there late?”</b><span>Feeling safe: researched by hand, if at all, and mostly by the women in the group.</span></div>
+          <div class="q"><b>“reached home?”</b><span>Getting back: rides, check-ins and the split fall to whoever is still awake.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="outcome">
+    <div class="wrap">
+      <span class="kick">The outcome</span>
+      <h2 id="outcome" class="serif">Four taps, three places, <em>one reason each.</em></h2>
+      <p class="body" style="max-width:62ch;margin-top:16px">Infinight decides <i>with</i> the group instead of handing it a longer list. Pick how tonight feels, say who's coming, what you'll spend and how far you'll go, and three places come back, each with one plain reason it fits. The group votes on a shared link, books the table and the rides together, and the app checks everyone got home.</p>
+      <div class="flow">
+        <figure><div class="ph"><img src="infinight-screen-home.webp" width="520" height="1090" alt="Infinight home screen: 'Hi Karl, nice to see you!', a search bar and mood chips under 'Tonight feels like…'"></div><figcaption><b>Step 1 · Home</b>Tap a mood, say “Chill &amp; Laid Back”</figcaption></figure>
+        <figure class="mid"><div class="ph"><img src="infinight-screen-shape-tonight.webp" width="520" height="1090" alt="Shape tonight screen with the mood already picked, plus who's coming, spend each and how far"></div><figcaption><b>Step 2 · Shape tonight</b>Mood is set. Pick who, spend and distance</figcaption></figure>
+        <figure><div class="ph"><img src="infinight-screen-tonights-three.webp" width="520" height="1090" alt="Tonight's three: Skye, Terrace 21 and a third place, each with a one-line reason, Book and Send to squad buttons"></div><figcaption><b>Step 3 · Tonight's three</b>Three places, one reason each</figcaption></figure>
+      </div>
+      <div class="grid3">
+        <div class="card"><span class="tag ok">Backed by testing</span><h3>The reason sits above the price</h3><p>Testers didn't trust a pick they couldn't question. One plain line, like “quiet till 10, live jazz after”, made people act on it.</p></div>
+        <div class="card"><span class="tag ok">Backed by testing</span><h3>Invite by link, not username</h3><p>This removed the biggest drop-off. Nobody remembered their friends' handles.</p></div>
+        <div class="card"><span class="tag ok">Backed by testing</span><h3>A poll instead of an open chat</h3><p>Groups agreed on a plan faster than they could argue about it.</p></div>
+      </div>
+      <p class="note">This is an independent concept, so there are no business numbers to report. Solo and safety-first modes, and booking cabs for the whole squad, are still bets I haven't tested with a real group. The full case study says which is which.</p>
+    </div>
+  </section>
+
+  <section class="end">
+    <div class="wrap">
+      <div class="endbox">
+        <h2 class="serif">See how I got there, <em>wrong guess included.</em></h2>
+        <p>The full case study covers the competitor scan, my first bet and why research changed it, the sketches, the decisions and what each one cost, plus a live prototype you can tap through.</p>
+        <div class="ctas"><a class="btn p" href="infinight-full.html">Read the full case study &rarr;</a><a class="btn s" href="index.html">Back to portfolio</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="wrap"><footer><span>Infinight · An independent product concept by Harini</span><span>Bengaluru · 2026</span></footer></div>
+</body>
+</html>
