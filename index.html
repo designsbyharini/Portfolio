@@ -228,6 +228,11 @@
   .c3 .more-link{background:var(--paper);color:var(--ink)}
   .c3 .more-link:hover{background:var(--ink);color:var(--paper)}
   .more-link .arr{transition:transform .5s var(--ease)}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;align-self:flex-start}
+  .cta-row .more-link{margin-top:0}
+  .fig-link{display:inline-flex;align-items:center;gap:9px;font:500 15px var(--text);padding:13px 20px;border-radius:999px;border:1.5px solid currentColor;color:var(--on-blue,#fff);transition:background .4s,color .4s}
+  .fig-link:hover{background:var(--paper);color:var(--ink)}
+  html,body{overflow-x:clip}
   .card:hover .more-link .arr{transform:translateX(4px)}
   .aside{font:500 13px var(--text);margin-top:12px;color:var(--blue-lt)}
 
@@ -387,8 +392,7 @@
 
   /* side quests */
   .strip-row{overflow:hidden;padding:8px 0 4px}
-  .track{display:flex;gap:20px;width:max-content;animation:slide2 48s linear infinite}
-  .strip-row:hover .track{animation-play-state:paused}
+  .track{display:flex;gap:20px;width:max-content;will-change:transform}
   @keyframes slide2{to{transform:translateX(calc(-50% - 10px))}}
   .tile{width:clamp(270px,26vw,380px);flex:none;display:block}
   .tile .img{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden}
@@ -719,7 +723,7 @@
           <h3>What happens when the banking interface becomes a conversation?</h3>
           <p>Not "we added a chatbot." A careful look at when asking beats tapping, and what happens when the AI gets it wrong: corrections, confirmations, guardrails, and knowing when to hand back to the screen.</p>
           <p class="flow">Conversation <i>→</i> Understanding <i>→</i> Result <i>→</i> Action</p>
-          <a class="more-link" href="#" data-href="ai-banking.html">Read the case study <span class="arr">→</span></a>
+          <div class="cta-row"><a class="more-link" href="#" data-href="ai-banking.html">Read the case study <span class="arr">→</span></a><a class="fig-link" href="https://www.figma.com/design/maM2NRZkeB0NDyXN3yeXQk/BankGPT?node-id=14-1215&amp;t=vwjjzTgvD5pl5wr5-1" target="_blank" rel="noopener" data-cursor="Figma"><svg width="11" height="16" viewBox="0 0 38 57" aria-hidden="true"><path fill="currentColor" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0zM0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0zM19 0v19h9.5a9.5 9.5 0 1 0 0-19H19zM0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5zM0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>Figma file <span class="arr">↗</span></a></div>
         </div>
         <div class="shade"></div>
       </article>
@@ -781,18 +785,18 @@
   </div>
   <div class="strip-row fade">
     <div class="track" id="track">
-      <a class="tile" href="ergo-glider.html" target="_blank" rel="noopener" data-cursor="Read more">
-        <div class="img" style="background:#F4F2EC"><span class="fav"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.4 6.7L12 17l-6.1 3.3 1.4-6.7-5-4.6 6.8-.8z"/></svg>Personal favourite</span><img src="cover-ergo-glider.webp" alt="Ergo Glider cover: my top-view sketches evolving from a leaf to an egg to a layout with controls under the thumb, ending in a photo of the finished iron, under the question What if ironing felt as easy as using a mouse?" width="800" height="1000" decoding="async" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)"></div>
+      <a class="tile" href="ergo-glider.html" data-cursor="Read more">
+        <div class="img" style="background:#1F4BFF"><span class="fav"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.4 6.7L12 17l-6.1 3.3 1.4-6.7-5-4.6 6.8-.8z"/></svg>Personal favourite</span><img src="cover-ergo-glider.webp" alt="Ergo Glider cover: an illustrated iron shaped like a computer mouse being clicked, steam rising, on blue, with the headline What if ironing felt like using a mouse?" width="800" height="1000" decoding="async" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)"></div>
         <div class="meta"><span>04</span><span>Physical product · Interaction</span></div>
         <h4>Ergo Glider</h4><p>Designing an iron that doesn't behave like an iron.</p>
       </a>
       <a class="tile" href="infinight.html" data-cursor="Read more">
-        <div class="img" style="background:#0b0812"><span class="fav"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.4 6.7L12 17l-6.1 3.3 1.4-6.7-5-4.6 6.8-.8z"/></svg>Personal favourite</span><img src="cover-infinight.webp" alt="Infinight cover: four friends, Karl, Priya, Rohan and Aisha, shown as stars whose paths meet at the Infinight owl pin under the line Four friends. One night." width="800" height="1000" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+        <div class="img" style="background:#0B0B0F"><span class="fav"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.4 6.7L12 17l-6.1 3.3 1.4-6.7-5-4.6 6.8-.8z"/></svg>Personal favourite</span><img src="cover-infinight.webp" alt="Infinight cover: four friends on a night sky, their paths meeting at one location pin under the moon, with the headline Four maybes. One plan." width="800" height="1000" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
         <div class="meta"><span>05</span><span>Consumer app · Discovery</span></div>
         <h4>Infinight</h4><p>Finding a good night out before it becomes a group-chat problem.</p>
       </a>
-      <a class="tile" href="urban-company.html" target="_blank" rel="noopener" data-cursor="Read more">
-        <div class="img" style="background:#c9a072"><img src="cover-urban-company.webp" alt="Urban Company cover: a kraft-paper price tag for a 2 BHK home deep clean at ₹4,599 on a wooden table, a sticky note asking but what's actually included, and a receipt where some items are marked with a question mark" width="800" height="1000" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)"></div>
+      <a class="tile" href="urban-company.html" data-cursor="Read more">
+        <div class="img" style="background:#F2EFE8"><img src="cover-urban-company.webp" alt="Urban Company cover: a black price tag reading ₹4,599 with blank lines for what is included, beside a big blue question mark, with the headline The price was clear. The package wasn't." width="800" height="1000" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)"></div>
         <div class="meta"><span>06</span><span>Booking · UX exploration</span></div>
         <h4>Urban Company</h4><p>When people hesitate to book, it isn't always the price.</p>
       </a>
@@ -993,6 +997,20 @@
       e.preventDefault(); lenis.scrollTo(t, { offset: a.getAttribute('href') === '#top' ? 0 : -20 });
     }));
   }
+
+  /* remember where the visitor was, and bring them back there from a case study */
+  const saveY = () => { try { sessionStorage.setItem('hp-y', String(Math.round(window.scrollY))); } catch (e) {} };
+  document.addEventListener('click', e => { const a = e.target.closest('a[href]'); if (a && /\.html(\?|#|$)/.test(a.getAttribute('href') || '') && !/^https?:/.test(a.getAttribute('href'))) saveY(); }, true);
+  window.addEventListener('pagehide', saveY);
+  const restore = () => {
+    let back = null, y = 0;
+    try { back = sessionStorage.getItem('hp-return'); y = +sessionStorage.getItem('hp-y') || 0; sessionStorage.removeItem('hp-return'); } catch (e) {}
+    if (back !== '1' || !y) return;
+    const go = () => { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); };
+    go(); setTimeout(go, 120); setTimeout(go, 600);
+  };
+  if ('scrollRestoration' in history) { try { if (sessionStorage.getItem('hp-return') === '1') history.scrollRestoration = 'manual'; } catch (e) {} }
+  window.addEventListener('pageshow', e => { if (e.persisted) { try { sessionStorage.removeItem('hp-return'); } catch (er) {} } else restore(); });
 
   /* split words */
   document.querySelectorAll('[data-split]').forEach(el => {
@@ -1199,7 +1217,25 @@
     });
   }
   const track = document.getElementById('track');
-  if (!reduce) [...track.children].forEach(t => { const c = t.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.tabIndex = -1; track.appendChild(c); bind(c); });
+  /* side quests: seamless, never-ending loop (no pause, no gap) */
+  if (!reduce) {
+    const originals = [...track.children];
+    const GAP = 20, SPEED = 42; /* px per second */
+    let setW = 0, x = 0, last = 0;
+    const build = () => {
+      [...track.children].forEach(c => { if (!originals.includes(c)) c.remove(); });
+      const first = originals[0], lastEl = originals[originals.length - 1];
+      setW = (lastEl.offsetLeft + lastEl.offsetWidth) - first.offsetLeft + GAP;
+      const copies = Math.max(1, Math.ceil((window.innerWidth + setW) / setW));
+      for (let k = 0; k < copies; k++) originals.forEach(t => { const c = t.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.tabIndex = -1; track.appendChild(c); bind(c); });
+      x = ((x % setW) + setW) % setW * -1;
+    };
+    build();
+    const loop = now => { const dt = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now; x -= SPEED * dt; if (-x >= setW) x += setW; track.style.transform = `translate3d(${x}px,0,0)`; requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+    let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(build, 200); });
+    document.addEventListener('visibilitychange', () => { last = 0; });
+  }
 
   const copy = document.getElementById('copy');
   const copyTxt = document.getElementById('copyTxt');

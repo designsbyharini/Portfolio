@@ -1923,7 +1923,16 @@
   });
 })();
 </script>
-</head>
+<style id="hp-inject-css">
+html,body{overflow-x:clip!important;max-width:100%!important}
+#hp-back-wrap{position:fixed;left:16px;bottom:16px;z-index:2147483000;display:flex;gap:8px;align-items:center;transition:bottom .25s ease}
+#hp-back-wrap a{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 18px 0 8px;border-radius:999px;background:rgba(13,13,15,.9);color:#fff!important;border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 30px rgba(0,0,0,.25);font:600 14px/1 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;letter-spacing:0;text-decoration:none!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .2s ease,background .2s ease;white-space:nowrap}
+#hp-back-wrap a:hover{transform:translateY(-2px);background:rgba(13,13,15,1)}
+#hp-back-wrap a:focus-visible{outline:2px solid #1F4BFF;outline-offset:3px}
+#hp-back-wrap .ic{width:28px;height:28px;border-radius:50%;background:#1F4BFF;display:inline-flex;align-items:center;justify-content:center;flex:none}
+#hp-back-wrap a.fig{padding:0 16px 0 12px;gap:8px}
+@media print{#hp-back-wrap{display:none}}
+</style></head>
 <body>
 <x-dc>
 <helmet>
@@ -2888,5 +2897,62 @@ class Component extends DCLogic {
 </script>
 
 
-<a href="index.html" class="hr-back" style="position:fixed;left:16px;bottom:16px;z-index:2147483000;background:rgba(20,12,32,.88);color:#f3edfa;border:1px solid rgba(199,125,255,.45);border-radius:999px;padding:10px 16px;font:600 14px/1 system-ui,-apple-system,sans-serif;text-decoration:none;backdrop-filter:blur(8px)">&larr; Harini&#39;s portfolio</a>
+
+
+<div id="hp-back-wrap">
+  <a id="hp-back" href="index.html" aria-label="Back to Harini's portfolio"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7.5 3.5 3 8l4.5 4.5"/></svg></span>Back to portfolio</a>
+  
+</div>
+<script id="hp-inject-js">
+(function(){
+  /* Back to portfolio: return to the exact spot on the homepage */
+  var back=document.getElementById('hp-back');
+  back.addEventListener('click',function(e){
+    try{sessionStorage.setItem('hp-return','1')}catch(err){}
+    var ref=document.referrer||'';
+    var fromHome=false;
+    try{var u=new URL(ref);fromHome=u.origin===location.origin&&/(\/|index\.html)$/.test(u.pathname)}catch(err){}
+    if(fromHome&&history.length>1){e.preventDefault();history.back();}
+  });
+  /* keep the button clear of other floating buttons in the bottom-left corner */
+  var wrap=document.getElementById('hp-back-wrap');
+  function lift(){
+    var W=document.documentElement.clientWidth,H=window.innerHeight,need=16;
+    var els=document.body?document.body.getElementsByTagName('*'):[];
+    for(var i=0;i<els.length;i++){var el=els[i];if(wrap.contains(el)||el===wrap)continue;
+      var cs=getComputedStyle(el);if(cs.position!=='fixed'||cs.display==='none'||cs.visibility==='hidden'||+cs.opacity===0)continue;
+      var r=el.getBoundingClientRect();if(r.width<20||r.height<20||r.height>H*.5)continue;
+      var wr=wrap.getBoundingClientRect();
+      if(r.bottom>H-90&&r.left<Math.max(wr.right,330)&&r.right>16&&r.top>H*.5){need=Math.max(need,H-r.top+10)}}
+    wrap.style.bottom=need+'px';
+  }
+  /* make anything wider than the screen fit, instead of letting the page scroll sideways */
+  function lay(e){var x=0,n=e;while(n){x+=n.offsetLeft||0;n=n.offsetParent}return x}
+  function inScroller(e){for(var a=e.parentElement;a&&a!==document.body;a=a.parentElement){if(getComputedStyle(a).overflowX!=='visible')return true}return false}
+  function fit(){
+    for(var pass=0;pass<2;pass++){
+    var W=document.documentElement.clientWidth,groups=new Map(),els=document.body.getElementsByTagName('*');
+    var out=function(r){return r.right>W+1||r.left<-1};
+    for(var i=0;i<els.length;i++){var e=els[i];if(!(e instanceof HTMLElement)||!e.offsetWidth||wrap.contains(e))continue;
+      var r=e.getBoundingClientRect();if(!out(r))continue;                       /* visually past an edge */
+      var L=lay(e);if(L>=-1&&L+e.offsetWidth<=W+1)continue;                       /* ...and really laid out there, not just animating in */
+      if(getComputedStyle(e).position==='fixed'||inScroller(e))continue;
+      var c=e,a=e.parentElement;
+      var H=window.innerHeight;while(a&&a!==document.body&&a.offsetHeight<H*1.3&&(out(a.getBoundingClientRect())||a.scrollWidth>a.clientWidth+2)){c=a;a=a.parentElement}
+      if(c.offsetHeight>H*1.3)continue;
+      if(!a||c===document.body)continue;
+      var ar=a.getBoundingClientRect(),cr=c.getBoundingClientRect();
+      var g=groups.get(c)||{l:cr.left,r:cr.right,bl:Math.max(0,ar.left),br:Math.min(W,ar.right)};
+      g.l=Math.min(g.l,r.left);g.r=Math.max(g.r,r.right);groups.set(c,g)}
+    if(!groups.size)break;
+    groups.forEach(function(g,c){var k=(g.br-g.bl-8)/(g.r-g.l);if(k<1&&k>=.3){var cur=parseFloat(c.style.zoom)||1;c.style.zoom=(cur*k).toFixed(4);c.dataset.hpz='1'}});
+    }
+  }
+  function run(){try{fit()}catch(e){}try{lift()}catch(e){}}
+  if(document.readyState==='complete')setTimeout(run,300);else window.addEventListener('load',function(){setTimeout(run,300)});
+  setTimeout(run,2500);
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){document.querySelectorAll('[data-hpz]').forEach(function(e){e.style.zoom='';delete e.dataset.hpz});run()},250)});
+  setInterval(lift,1200);
+})();
+</script>
 </body></html>
