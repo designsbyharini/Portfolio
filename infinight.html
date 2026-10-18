@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Infinight: from group chat to a booked night out | Harini</title>
-<meta name="description" content="I designed Infinight, a going-out app that helps a group pick one night, book it together and get everyone home safely. The ask, what I built and what testing backed up.">
-<meta property="og:title" content="Every Saturday, a plan dies in the group chat. Infinight brings it home.">
-<meta property="og:description" content="A going-out app that helps a group pick one night, book it together and get everyone home safely.">
-<meta property="og:type" content="article">
-<meta name="twitter:card" content="summary">
+<title>Infinight: from group chat to a booked night out · Harini, Product Designer</title>
+
+
+
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
@@ -78,7 +78,7 @@
   footer{padding:26px 0 40px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;border-top:1px solid var(--line)}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-<style id="hp-inject-css">
+<meta name="description" content="A going-out app that helps a group pick one night, book it together and get everyone home safely."><meta property="og:type" content="website"><meta property="og:site_name" content="Harini · Product Designer"><meta property="og:title" content="Infinight: from group chat to a booked night out · Harini, Product Designer"><meta property="og:description" content="A going-out app that helps a group pick one night, book it together and get everyone home safely."><meta property="og:image" content="https://designsbyharini.github.io/Portfolio/og-infinight.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://designsbyharini.github.io/Portfolio/infinight.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Infinight: from group chat to a booked night out · Harini, Product Designer"><meta name="twitter:description" content="A going-out app that helps a group pick one night, book it together and get everyone home safely."><meta name="twitter:image" content="https://designsbyharini.github.io/Portfolio/og-infinight.jpg"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png"><style id="hp-inject-css">
 html,body{overflow-x:clip!important;max-width:100%!important}
 #hp-back-wrap{position:fixed;left:16px;bottom:16px;z-index:2147483000;display:flex;gap:8px;align-items:center;transition:bottom .25s ease}
 #hp-back-wrap a{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 18px 0 8px;border-radius:999px;background:rgba(13,13,15,.9);color:#fff!important;border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 30px rgba(0,0,0,.25);font:600 14px/1 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;letter-spacing:0;text-decoration:none!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .2s ease,background .2s ease;white-space:nowrap}
@@ -161,16 +161,15 @@ html,body{overflow-x:clip!important;max-width:100%!important}
   <a id="hp-back" href="index.html" aria-label="Back to Harini's portfolio"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7.5 3.5 3 8l4.5 4.5"/></svg></span>Back to portfolio</a>
   
 </div>
+<script src="tracker.js" defer></script>
 <script id="hp-inject-js">
 (function(){
   /* Back to portfolio: return to the exact spot on the homepage */
   var back=document.getElementById('hp-back');
   back.addEventListener('click',function(e){
+    /* always go to the homepage itself; the homepage restores the spot the visitor left.
+       (history.back() broke after in-page section links and embedded prototypes) */
     try{sessionStorage.setItem('hp-return','1')}catch(err){}
-    var ref=document.referrer||'';
-    var fromHome=false;
-    try{var u=new URL(ref);fromHome=u.origin===location.origin&&/(\/|index\.html)$/.test(u.pathname)}catch(err){}
-    if(fromHome&&history.length>1){e.preventDefault();history.back();}
   });
   /* keep the button clear of other floating buttons in the bottom-left corner */
   var wrap=document.getElementById('hp-back-wrap');
