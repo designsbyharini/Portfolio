@@ -3,7 +3,7 @@
 
    SETUP: paste your Apps Script web app URL between the quotes below and commit.
    Until it's filled in, nothing is sent anywhere. */
-var SHEET_URL = 'https://script.google.com/macros/s/AKfycbypAulmhVE812ygDXiSFOkz5mknbvKrDt2h-mM6enI3vOk84015qbLZe34hrVUcf6Ig7Q/exec';
+var SHEET_URL = '';
 
 (function () {
   try {
